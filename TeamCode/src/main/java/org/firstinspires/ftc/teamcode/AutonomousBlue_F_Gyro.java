@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
+@Disabled
 @Autonomous(name="(BLUE) F [Found->*P1(Wall)] GYRO", group="Blue")
 public class AutonomousBlue_F_Gyro extends PhoenixBotSharedCode
 {

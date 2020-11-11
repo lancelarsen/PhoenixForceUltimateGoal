@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
+@Disabled
 @TeleOp(name="Sensor: REVColorDistance", group="Demo")
 public class DemoSensorRevColorDistance extends PhoenixBotSharedCode 
 {

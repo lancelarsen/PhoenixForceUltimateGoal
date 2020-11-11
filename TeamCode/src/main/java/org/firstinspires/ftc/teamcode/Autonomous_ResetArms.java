@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
+@Disabled
 @Autonomous(name="Reset Arms", group="")
 public class Autonomous_ResetArms extends PhoenixBotSharedCode
 {

@@ -18,8 +18,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-@Disabled
-
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
  * the identity of Vuforia VuMarks encountered on the field. The code is structured as
@@ -39,8 +37,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
+@Disabled
 @TeleOp(name="Vision: Vuforia Mark", group="Demo")
-
 public class DemoVisionVuMarkIdentification extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";

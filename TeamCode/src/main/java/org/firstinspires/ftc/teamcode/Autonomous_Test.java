@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-
+@Disabled
 @Autonomous(name="Test", group="")
 public class Autonomous_Test extends PhoenixBotSharedCode
 {

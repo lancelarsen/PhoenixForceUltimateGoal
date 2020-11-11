@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+@Disabled
 @Autonomous(name="(RED) F [Found->*P1(Wall)] GYRO", group="Red")
 public class AutonomousRed_F_Gyro extends PhoenixBotSharedCode
 {

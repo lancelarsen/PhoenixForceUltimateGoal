@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Disabled
 @TeleOp(name="Sensor: 2M Distance", group="Demo")
 public class DemoSensor2mDistance extends PhoenixBotSharedCode
 {

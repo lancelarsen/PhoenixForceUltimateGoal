@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.util.Range;
 
 @Disabled
 @Autonomous(name="Demo: Auto Drive By Gyro", group="Demo")
-
 public class DemoDriveByGyro extends PhoenixBotSharedCode
 {
     // These constants define the desired driving/control characteristics

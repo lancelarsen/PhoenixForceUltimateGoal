@@ -23,8 +23,6 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
-@Disabled
-
 /**
  * This 2019-2020 OpMode illustrates the basics of using the Vuforia localizer to determine
  * positioning and orientation of robot on the SKYSTONE FTC field.
@@ -55,9 +53,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-
+@Disabled
 @TeleOp(name="Vision: Vuforia Nav", group="Demo")
-
 public class DemoVisionVuforiaSkystoneNav extends LinearOpMode {
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:

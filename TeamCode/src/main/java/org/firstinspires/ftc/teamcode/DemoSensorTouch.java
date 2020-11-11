@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
+@Disabled
 @TeleOp(name = "Sensor: Touch", group = "Demo")
 public class DemoSensorTouch extends PhoenixBotSharedCode
 {

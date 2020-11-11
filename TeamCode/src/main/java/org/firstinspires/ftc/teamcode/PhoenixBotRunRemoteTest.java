@@ -49,6 +49,7 @@ import com.qualcomm.robotcore.util.Range;
 //  - A                     - Pick Up Brick / Move Arm Down
 //----------------------------------------------------------------------
 
+@Disabled
 @TeleOp(name="Remote Testing", group="1")
 public class PhoenixBotRunRemoteTest extends PhoenixBotSharedCode 
 {
