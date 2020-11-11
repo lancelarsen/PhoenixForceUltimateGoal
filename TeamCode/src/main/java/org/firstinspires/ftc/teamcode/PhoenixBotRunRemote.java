@@ -17,28 +17,28 @@ import com.qualcomm.robotcore.util.Range;
 //  - Dpad Down             - Drive Straight Backward
 //  - Dpad Right            - Drive Strafe Right
 //  - Dpad Left             - Drive Strafe Left
-//  - Left Bumper           - Whiskers Up
+//  - Left Bumper           -
 //  - Left Trigger          - Whiskers Down
 //  - Right Bumper          - Brick Spacer Up
 //  - Right Trigger         - Brick Spacer Down
 //  - X                     - Speed Slow
 //  - Y                     - Speed Medium
-//  - B                     - Speed Fast 
+//  - B                     - Speed Fast
 //  - A                     - Speed Very Slow
 //----------------------------------------------------------------------
 // Gamepad 2
 //  - Left Stick            - Lifter Up/Down Quick
 //  - Left Stick Button     - Lower and Reset Lifter Encoder
-//  - Right Stick Button    - 
+//  - Right Stick Button    -
 //  - Right Stick (Up)      - ** Angry Sound
 //  - Right Stick (Down)    - ** Alert Sound
 //  - Right Stick (Left)    - ** Song Sound
 //  - Right Stick (Right)   - ** BT-BT Sound
-//  - Right Stick Button    - 
+//  - Right Stick Button    -
 //  - Dpad Up               - Lifter Up
 //  - Dpad Down             - Lifter Down Slow
-//  - Dpad Right            - 
-//  - Dpad Left             - 
+//  - Dpad Right            -
+//  - Dpad Left             -
 //  - Left Bumper           - Reach Arm Out
 //  - Left Trigger          - Reach Arm In
 //  - Right Bumper          - Lifter Up Level   Replace with tapemeasure
@@ -50,10 +50,10 @@ import com.qualcomm.robotcore.util.Range;
 //----------------------------------------------------------------------
 
 @TeleOp(name="-- Remote Control --", group="1")
-public class PhoenixBotRunRemote extends PhoenixBotSharedCode 
+public class PhoenixBotRunRemote extends PhoenixBotSharedCode
 {
     @Override
-    public void runOpMode() 
+    public void runOpMode()
     {
         //----------------------------------------------------------------------
         //--- Initialize the hardware variables
@@ -76,13 +76,14 @@ public class PhoenixBotRunRemote extends PhoenixBotSharedCode
         //----------------------------------------------------------------------
         //--- Run until the end of the match (driver presses STOP)
         //----------------------------------------------------------------------
-        while (opModeIsActive()) 
+        while (opModeIsActive())
         {
             //----------------------------------------------------------------------
             //--- Gamepad 1
             //----------------------------------------------------------------------
-            SetDriveSpeeds();       //--- x, y, b, a 
+            SetDriveSpeeds();       //--- x, y, b, a
             ArcadeDrivePlus();      //--- left_stick, right_stick, dpad_up, dpad_down, dpad_left, dpad_right
+//            TestMotors();
 
             //----------------------------------------------------------------------
             //--- Gamepad 2
