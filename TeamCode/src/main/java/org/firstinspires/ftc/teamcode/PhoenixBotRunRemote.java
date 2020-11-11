@@ -83,22 +83,16 @@ public class PhoenixBotRunRemote extends PhoenixBotSharedCode
             //----------------------------------------------------------------------
             SetDriveSpeeds();       //--- x, y, b, a 
             ArcadeDrivePlus();      //--- left_stick, right_stick, dpad_up, dpad_down, dpad_left, dpad_right
-            WhiskerClamps();        //--- left_bumper, left_trigger
-            BrickSpacer();          //--- right_bumper, right_trigger
-            
+
             //----------------------------------------------------------------------
             //--- Gamepad 2
             //----------------------------------------------------------------------
-            Lifter();               //--- dpad_up, dpad_down, y, a, left_bumper, left_trigger, left_stick, left_stick_button
-            //MoveReachArm();         //--- right_trigger, right_bumper
-            PlaySounds();           //--- right_stick
-            CapArm();               //--- x, b
-            MoveTape();
+//            Lifter();               //--- dpad_up, dpad_down, y, a, left_bumper, left_trigger, left_stick, left_stick_button
+//            PlaySounds();           //--- right_stick
 
             //----------------------------------------------------------------------
             //--- Sensors
             //----------------------------------------------------------------------
-            TouchingFoundationSensors();
 
             //----------------------------------------------------------------------
             //--- Screen

@@ -5,14 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 @Disabled
-@Autonomous(name="Z2 [2->P1(Wall)]", group="Both")
-public class Autonomous_Z2 extends PhoenixBotSharedCode
+@Autonomous(name="(BLUE) Auto", group="Blue")
+public class AutonomousBlue_A extends PhoenixBotSharedCode
 {
     //----------------------------------------------------------------------
     //--- Strategy Details ---
-    //--- Starting Postion: P2 - Back towards Bridge (Align front of robot with crack)
-    //--- Sleep 10 seconds, drive backwards under bridge
+    //--- Starting Postion: P2 - Face Stones (back edge align on arena crack)
+    //--- Get the close skystone, deliver to foundation, turn foundation, 
+    //---  pull diag and then straight back and park in P2
     //----------------------------------------------------------------------
+    static final double GYRO_ANGLE_BACKWALL = 90.0;
+    static final double GYRO_ANGLE_FRONTWALL = -90.0;
+    static final double GYRO_ANGLE_CENTER = 0.0;
+    static final double GYRO_ANGLE_STARTWALL = 180.0;
     
     //----------------------------------------------------------------------
     //--- Autonomous Code
@@ -25,12 +30,11 @@ public class Autonomous_Z2 extends PhoenixBotSharedCode
         //----------------------------------------------------------------------
         robot.init(hardwareMap);
         InitGyro();
-        InitSkystoneArms();
-        
-        ShowMessage("Z2 [2->P1]");
-        robot.blinkinLedDriver1.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-        SmartSleep(1000);
-        robot.blinkinLedDriver1.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_SINELON);
+
+//        ShowMessage("(BLUE) D [Full->*P2(Center)] GYRO");
+//        robot.blinkinLedDriver1.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+//        sleep(1000);
+//        robot.blinkinLedDriver1.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_SINELON);
 
         //----------------------------------------------------------------------
         //--- Initialize before Start
@@ -46,16 +50,7 @@ public class Autonomous_Z2 extends PhoenixBotSharedCode
         //----------------------------------------------------------------------
         // Set Drive Path
         //----------------------------------------------------------------------
-        WaitCountdown(20000);                      //--- Wait for partner
-        
-        LifterToPosition(500);                  //--- Raise Lifter to release Arm
-        SmartSleep(2000);
-        LifterToPosition(0);                    //--- Lower Lifter
-        
-        EncoderDriveAccel(0.5,-10,-10,3,3);
-        
-        WaitCountdown(0);                      //--- Wait for end of match
-        
+        SmartSleep(10000);
         StopMotors();
     }
 }
