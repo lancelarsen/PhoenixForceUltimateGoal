@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.drive.BotMecanumDrive;
+import org.firstinspires.ftc.teamcode.BotMecanumDrive;
 
 import java.util.Objects;
 

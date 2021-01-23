@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.drive.BotMecanumDrive;
+import org.firstinspires.ftc.teamcode.BotMecanumDrive;
 
 import java.util.Objects;
 

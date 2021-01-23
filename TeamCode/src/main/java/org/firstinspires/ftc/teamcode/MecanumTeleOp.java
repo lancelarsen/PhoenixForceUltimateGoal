@@ -2,14 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.drive.BotMecanumDrive;
-
 public class MecanumTeleOp {
-    LinearOpMode _opMode;
+    private LinearOpMode _opMode;
+    private BotMecanumDrive mecanumDrive;
 
-    BotMecanumDrive mecanumDrive;
-
-    MecanumTeleOp(LinearOpMode opMode) {
+    public MecanumTeleOp(LinearOpMode opMode) {
         _opMode = opMode;
         mecanumDrive = new BotMecanumDrive(_opMode.hardwareMap);
     }

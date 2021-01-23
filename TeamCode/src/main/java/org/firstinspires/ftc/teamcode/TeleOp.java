@@ -8,6 +8,7 @@ public class TeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
         MecanumTeleOp mecanumTeleOp = new MecanumTeleOp(this);
+        AppendagesTeleOp appendagesTeleOp = new AppendagesTeleOp(this);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -15,9 +16,12 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             mecanumTeleOp.arcadeDrive();
+            appendagesTeleOp.commandIntake();
+            appendagesTeleOp.commandShooter();
+            appendagesTeleOp.commandGoalGrabber();
 
             telemetry.addData("Status", "Running");
-            telemetry.update();
+            //telemetry.update();
         }
     }
 }

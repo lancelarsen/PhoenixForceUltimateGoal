@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.drive.BotMecanumDrive;
+import org.firstinspires.ftc.teamcode.BotMecanumDrive;
 
 /*
  * This is an example of a more complex path to really test the tuning.
