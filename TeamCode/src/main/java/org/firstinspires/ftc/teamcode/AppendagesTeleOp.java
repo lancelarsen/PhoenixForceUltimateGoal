@@ -1,113 +1,169 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class AppendagesTeleOp {
-    private LinearOpMode _opMode;
-    private BotAppendages appendages;
+public class AppendagesTeleOp extends BotAppendages {
+    private LinearOpMode opMode;
 
     private boolean shooterTogglePrePressed = false;
     private boolean shooterEnabled = false;
 
+    private boolean adjRingLifterPrePressed = false;
+    private boolean adjRingLifterPosition = false;
+    private RingLifterPosition ringLifterPosition = RingLifterPosition.DOWN;
+
     private boolean intakeTogglePrePressed = false;
     private boolean intakeEnabled = false;
 
-    private boolean goalGrabberOpen = false;
+    private boolean wingsExtended = false;
+
+    private boolean adjGoalLifterPrePressed = false;
+    private boolean adjGoalLifterPosition = false;
+    private GoalLifterPosition goalLifterPosition = GoalLifterPosition.DOWN;
+    private boolean goalGrabberOpen = true;
 
     public AppendagesTeleOp(LinearOpMode opMode) {
-        _opMode = opMode;
-        appendages = new BotAppendages(_opMode.hardwareMap);
+        super(opMode.hardwareMap);
+        this.opMode = opMode;
 
-        appendages.setIntakeDeployerArmAngle(BotAppendages.CLOSED_INTAKE_DEPLOYER_ANGLE);
+        extendIntakeDeployArm(false);
+    }
+
+    boolean isAdjRingLifterPosition() {
+        return adjRingLifterPosition;
+    }
+
+    boolean isAdjGoalLifterPosition() {
+        return adjGoalLifterPosition;
     }
 
     public void commandShooter() {
-        double stickY = _opMode.gamepad2.left_stick_y;
-        if (Math.abs(stickY) < BotAppendages.JOYSTICK_DEAD_ZONE) {
-            stickY = 0;
+        if (this.opMode.gamepad2.right_stick_button && !adjRingLifterPrePressed) {
+            adjRingLifterPosition = !adjRingLifterPosition;
+            adjRingLifterPrePressed = true;
+
+            if (adjRingLifterPosition) {
+                ringLifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            } else {
+                ringLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                ringLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        } else if (!this.opMode.gamepad2.right_stick_button) {
+            adjRingLifterPrePressed = false;
         }
 
-        double tilterAngle = MapUtil.map(stickY, -1.0, 1.0, BotAppendages.MIN_RING_TILTER_ANGLE, BotAppendages.MAX_RING_TILTER_ANGLE);
+        if (adjRingLifterPosition) {
+            // Not sure why we need *-1, as we have motor reversed in HW class
+            double rightStickY = this.opMode.gamepad2.right_stick_y * -1 * 0.5;
+            if (Math.abs(rightStickY) < JOYSTICK_DEAD_ZONE) {
+                rightStickY = 0;
+            }
 
-        appendages.setRingTilterAngle(tilterAngle);
-
-        if (_opMode.gamepad2.x) {
-            appendages.setRingShooterArmAngle(BotAppendages.OPEN_RING_SHOOTER_ARM_ANGLE);
+            ringLifter.setPower(rightStickY);
         } else {
-            appendages.setRingShooterArmAngle(BotAppendages.CLOSED_RING_SHOOTER_ARM_ANGLE);
+            if (this.opMode.gamepad2.dpad_up) {
+                ringLifterPosition = RingLifterPosition.UP;
+            } else if (this.opMode.gamepad2.dpad_down) {
+                ringLifterPosition = RingLifterPosition.DOWN;
+            }
+
+            setRingLifterPosition(ringLifterPosition);
         }
 
-        if (_opMode.gamepad2.y && !shooterTogglePrePressed) {
+        double leftStickY = this.opMode.gamepad2.left_stick_y;
+        if (Math.abs(leftStickY) < JOYSTICK_DEAD_ZONE) {
+            leftStickY = 0;
+        }
+
+        setShooterTilterAngle(leftStickY);
+
+        extendShooterArm(this.opMode.gamepad2.x);
+
+        if (this.opMode.gamepad2.y && !shooterTogglePrePressed) {
             shooterEnabled = !shooterEnabled;
             shooterTogglePrePressed = true;
         }
-        if (!_opMode.gamepad2.y) {
+        if (!this.opMode.gamepad2.y) {
             shooterTogglePrePressed = false;
         }
 
-        if (shooterEnabled) {
-            appendages.setRingShooterWheelSpeed(BotAppendages.RING_SHOOTER_WHEEL_SPEED);
+        if (ringLifterPosition == RingLifterPosition.UP) {
+            enableShooterWheel(true);
         } else {
-            appendages.setRingShooterWheelSpeed(0);
+            enableShooterWheel(shooterEnabled);
         }
-
-        double ringRaiserSpeed = 0;
-
-        if (Math.abs(_opMode.gamepad2.right_stick_y) > BotAppendages.JOYSTICK_DEAD_ZONE) {
-            ringRaiserSpeed = _opMode.gamepad2.right_stick_y * BotAppendages.RING_RAISER_SPEED_MULTIPLIER;
-        }
-
-        appendages.setRingRaiserSpeed(ringRaiserSpeed);
     }
 
     public void commandIntake() {
-        appendages.setIntakeDeployerArmAngle(BotAppendages.OPEN_INTAKE_DEPLOYER_ANGLE);
+        extendIntakeDeployArm(true);
 
-        double largeRollerSpeed = BotAppendages.LARGE_INTAKE_ROLLER_SPEED;
-        double smallRollerSpeed = BotAppendages.SMALL_INTAKE_ROLLER_SPEED;
+        setIntakeDirection(this.opMode.gamepad2.a ? Direction.REVERSE : Direction.FORWARD);
 
-        if (_opMode.gamepad2.a) {
-            largeRollerSpeed *= -1;
-            smallRollerSpeed *= -1;
-        }
-
-        if (_opMode.gamepad2.b && !intakeTogglePrePressed) {
+        if (this.opMode.gamepad2.b && !intakeTogglePrePressed) {
             intakeEnabled = !intakeEnabled;
             intakeTogglePrePressed = true;
         }
-        if (!_opMode.gamepad2.b) {
+        if (!this.opMode.gamepad2.b) {
             intakeTogglePrePressed = false;
         }
-        if (!intakeEnabled) {
-            largeRollerSpeed = 0;
-            smallRollerSpeed = 0;
+
+        if (ringLifterPosition == RingLifterPosition.DOWN) {
+            enableIntake(true);
+        } else {
+            enableIntake(intakeEnabled);
+        }
+    }
+
+    public void commandWings() {
+        if (this.opMode.gamepad2.left_bumper) {
+            wingsExtended = true;
+        } else if (this.opMode.gamepad2.right_bumper) {
+            wingsExtended = false;
         }
 
-        appendages.setLargeIntakeRollerSpeed(largeRollerSpeed);
-        appendages.setSmallIntakeRollerSpeed(smallRollerSpeed);
+        extendWings(wingsExtended);
     }
 
     public void commandGoalGrabber() {
-        double goalGrabberLifterSpeed = BotAppendages.GOAL_GRABBER_LIFTER_SPEED;
+        if (this.opMode.gamepad1.right_stick_button && !adjGoalLifterPrePressed) {
+            adjGoalLifterPosition = !adjGoalLifterPosition;
+            adjGoalLifterPrePressed = true;
 
-        if (_opMode.gamepad2.dpad_down) {
-            goalGrabberLifterSpeed *= -1;
-        } else if (!_opMode.gamepad2.dpad_up) {
-            goalGrabberLifterSpeed = 0;
+            if (adjGoalLifterPosition) {
+                goalLifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            } else {
+                goalLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                goalLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        } else if (!this.opMode.gamepad1.right_stick_button) {
+            adjGoalLifterPrePressed = false;
         }
 
-        appendages.setGoalGrabberLifterSpeed(goalGrabberLifterSpeed);
+        if (adjGoalLifterPosition) {
+            // Not sure why we need *-1, as we have motor reversed in HW class
+            double rightStickY = this.opMode.gamepad1.right_stick_y * -1 * 0.5;
+            if (Math.abs(rightStickY) < JOYSTICK_DEAD_ZONE) {
+                rightStickY = 0;
+            }
 
-        if (_opMode.gamepad2.left_trigger > BotAppendages.TRIGGER_PRESSED_THRESH) {
-            goalGrabberOpen = true;
-        } else if (_opMode.gamepad2.right_trigger > BotAppendages.TRIGGER_PRESSED_THRESH) {
-            goalGrabberOpen = false;
-        }
-
-        if (goalGrabberOpen) {
-            appendages.setGoalGrabberAngle(BotAppendages.OPEN_GOAL_GRABBER_ANGLE);
+            goalLifter.setPower(rightStickY);
         } else {
-            appendages.setGoalGrabberAngle(BotAppendages.CLOSED_GOAL_GRABBER_ANGLE);
+            if (this.opMode.gamepad1.left_trigger > TRIGGER_PRESSED_THRESH) {
+                goalLifterPosition = GoalLifterPosition.UP;
+            } else if (this.opMode.gamepad1.right_trigger > TRIGGER_PRESSED_THRESH) {
+                goalLifterPosition = GoalLifterPosition.DOWN;
+            }
+
+            setGoalLifterPosition(goalLifterPosition);
         }
+
+        if (this.opMode.gamepad1.left_bumper) {
+            goalGrabberOpen = false;
+        } else if (this.opMode.gamepad1.right_bumper) {
+            goalGrabberOpen = true;
+        }
+
+        openGoalGrabber(goalGrabberOpen);
     }
 }

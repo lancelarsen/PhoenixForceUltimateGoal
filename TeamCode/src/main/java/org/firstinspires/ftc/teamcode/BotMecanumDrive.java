@@ -55,16 +55,23 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  */
 @Config
 public class BotMecanumDrive extends MecanumDrive {
+    //public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
+    //public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
-    public static double LATERAL_MULTIPLIER = 6.66;
+    public static double LATERAL_MULTIPLIER = 1.3; // (was 1.3)
 
     public static double VX_WEIGHT = 1;
-    public static double VY_WEIGHT = 1;
+    public static double VY_WEIGHT = 0.1; //(was 1)
     public static double OMEGA_WEIGHT = 1;
 
     public static int POSE_HISTORY_LIMIT = 100;
+
+    public final static double FAST_SPEED_MULTIPLIER = 1.0;
+    public final static double SLOW_SPEED_MULTIPLIER = 0.5;
+
+    //public final static double ADJUSTMENT_SPEED = 0.25;
 
     public enum Mode {
         IDLE,
@@ -88,7 +95,6 @@ public class BotMecanumDrive extends MecanumDrive {
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
-    private BNO055IMU imu;
 
     private VoltageSensor batteryVoltageSensor;
 
@@ -121,22 +127,12 @@ public class BotMecanumDrive extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }*/
 
-        // TODO: adjust the names of the following hardware devices to match your configuration
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        imu.initialize(parameters);
-
-        // TODO: if your hub is mounted vertically, remap the IMU axes so that the z-axis points
-        // upward (normal to the floor) using a command like the following:
-        // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
-
         leftFront = hardwareMap.get(DcMotorEx.class, "lf");
         rightFront = hardwareMap.get(DcMotorEx.class, "rf");
         leftRear = hardwareMap.get(DcMotorEx.class, "lr");
         rightRear = hardwareMap.get(DcMotorEx.class, "rr");
 
-        motors = Arrays.asList(leftFront, rightFront, leftRear, rightRear);
+        motors = Arrays.asList(leftFront, leftRear, rightFront, rightRear);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -155,8 +151,8 @@ public class BotMecanumDrive extends MecanumDrive {
         }
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftRear.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
         rightRear.setDirection(DcMotor.Direction.FORWARD);
 
         setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
@@ -377,15 +373,15 @@ public class BotMecanumDrive extends MecanumDrive {
     }
 
     @Override
-    public void setMotorPowers(double leftFrontPower, double rightFrontPower, double leftRearPower, double rightRearPower) {
+    public void setMotorPowers(double leftFrontPower, double leftRearPower, double rightRearPower, double rightFrontPower) {
         leftFront.setPower(leftFrontPower);
-        rightFront.setPower(rightFrontPower);
         leftRear.setPower(leftRearPower);
         rightRear.setPower(rightRearPower);
+        rightFront.setPower(rightFrontPower);
     }
 
     @Override
     public double getRawExternalHeading() {
-        return imu.getAngularOrientation().firstAngle;
+        return 0;
     }
 }
